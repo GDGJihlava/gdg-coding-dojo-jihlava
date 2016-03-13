@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example - example-example33-production</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-messages.js"></script>
+  <script type="text/javascript" src="validate.js"></script>
+</head>
+<body ng-app="formExample">
+  
+  <script type="text/ng-template" id="error-messages">
+    <div ng-message="required">This field is required</div>
+    <div ng-message="minlength">This field is too short</div>
+    <div ng-message="number">Not a number</div>
+
+  </script>
+  
+  <div ng-controller="ExampleController">
+  <form name="myForm" novalidate ng-submit="submit(myForm)">
+    <input ng-model="name" name="name" required/>
+    <div ng-messages="myForm.name.$error">
+      <div ng-messages-include="error-messages"></div>
+    </div>
+    
+    <input type="number" ng-model="number" name="number" required
+      ui-validate="'validate($value)'"/>
+      
+    <div ng-messages="myForm.number.$error" ng-if="myForm.$dirty || myForm.$submitted">
+      
+      <div ng-messages-include="error-messages"></div>
+      <div ng-message="validator"><img src="https://m.popkey.co/cedcc1/eLw7m.gif" width="200"/>Not even number</div>
+    </div>
+    
+        <input type="number" ng-model="number2" name="number2" required/>
+      
+    <div ng-messages="myForm.number2.$error" ng-if="myForm.$dirty || myForm.$submitted">
+      <div ng-messages-include="error-messages"></div>
+    </div>
+
+    <input type="submit"/>
+  </form>
+    <div>{{number + number2}}</div>
+  <pre>{{myForm | json}}</pre>
+
+</div>
+
+<script>
+  angular.module('formExample', ['ngMessages', 'ui.validate'])
+    .controller('ExampleController', function($scope) {
+        $scope.name = "Pepa";
+        
+        $scope.validate = function (value) {
+          return value % 2 == 0;
+        }
+        
+        $scope.submit = function (form) {
+          if (!form.$valid){
+            return false;
+          }
+          alert('sent');
+        }
+    });
+</script>
+</body>
+</html>
