@@ -1,0 +1,115 @@
+@import "../bower_components/bootstrap/less/bootstrap.less";
+@icon-font-path: "/bower_components/bootstrap/fonts/";
+
+body {
+  .container;
+}
+
+.list-column {
+  .make-md-column(7);
+
+  table {
+    .table;
+
+    .col-archive {
+      .text-center;
+    }
+
+    tr {
+      &.archived {
+        color: lightgray;
+        text-decoration: line-through;
+      }
+    }
+
+    .col-actions {
+      .text-right;
+
+      .edit {
+        .btn;
+        .btn-info;
+        .btn-xs;
+
+        span {
+          .glyphicon;
+          .glyphicon-edit;
+
+          top: 2px
+        }
+      }
+
+      .remove {
+        .btn;
+        .btn-danger;
+        .btn-xs;
+
+        span {
+          .glyphicon;
+          .glyphicon-remove;
+
+          top: 2px;
+        }
+      }
+    }
+  }
+}
+
+.create-column {
+  .make-md-column(5);
+
+  form {
+    .make-row();
+
+    fieldset {
+      .well;
+    }
+  }
+}
+
+.edit-column {
+  .make-md-column(6);
+  .make-sm-column(8);
+}
+
+.user-edit {
+  .make-row();
+
+  .column {
+    .make-sm-column(6);
+
+    p {
+      input {
+        .form-control;
+      }
+    }
+
+    p {
+      input{
+        &.ng-invalid.ng-touched,&.invalid {
+          .has-error;
+          .form-control;
+        }
+      }
+    }
+  }
+
+  .column-full {
+    .make-sm-column(12);
+  }
+
+  div[ng-message],.validation {
+    .alert;
+    .alert-danger;
+  }
+
+  a,button {
+    &.submit {
+      .btn;
+      .btn-success;
+    }
+    &.cancel {
+      .btn;
+      .btn-warning;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "introFile": "courseware-intro.jade",
+  "header": "ES6 exercises (www.angular.cz)",
+  "todoFilePath": "todo.jade",
+  "todos": [
+    "01-promise",
+    "02-promise-using"
+  ],
+  "testsSocket": true,
+  "testsResultsPath": "test-results"
+}

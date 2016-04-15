@@ -1,0 +1,62 @@
+[
+  {
+    "rank": 1,
+    "name": "Vykoupení z věznice Shawshank",
+    "year": 1994,
+    "rating": 95.2
+  },
+  {
+    "rank": 2,
+    "name": "Forrest Gump",
+    "year": 1994,
+    "rating": 94.7
+  },
+  {
+    "rank": 3,
+    "name": "Přelet nad kukaččím hnízdem",
+    "year": 1975,
+    "rating": 92.8
+  },
+  {
+    "rank": 4,
+    "name": "Zelená míle",
+    "year": 1999,
+    "rating": 92.7
+  },
+  {
+    "rank": 5,
+    "name": "Schindlerův seznam",
+    "year": 1993,
+    "rating": 92.3
+  },
+  {
+    "rank": 6,
+    "name": "Sedm",
+    "year": 1995,
+    "rating": 92.3
+  },
+  {
+    "rank": 7,
+    "name": "Kmotr",
+    "year": 1972,
+    "rating": 92.0
+  },
+  {
+    "rank": 8,
+    "name": "Dvanáct rozhněvaných mužů",
+    "year": 1957,
+    "rating": 91.4
+  },
+  {
+    "rank": 9,
+    "name": "Nedotknutelní",
+    "year": 2011,
+    "rating": 91.3
+  },
+  {
+    "rank": 10,
+    "name": "Kmotr II",
+    "year": 1974,
+    "rating": 91.3
+  }
+]

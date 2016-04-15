@@ -1,0 +1,101 @@
+h3 1 - Vytvoření promise
+
+a(href="https://developer.mozilla.org/cs/docs/Web/JavaScript/Reference/Global_Objects/Promise")
+ h4 Promise dokumentace
+
+p.
+  V této části si vyzkoušíte vytvoření vlastní promise, která bude reagovat na dokončení akce a na chybu tak jak by promise měla.
+
+ul
+  li Bude se jednat o promise, která počká zadaný interval a pak provolá předanou akci.
+  li V případě, že tato vrátí hodnotu, promise bude #[strong resolved] a hodnota bude předána jako výsledek promise.
+  li Pokud nic nevrátí bude promise #[strong rejected].
+
+h4 Karma runner
+
+p.
+  Opět jsme pro Vás připravili testy, spustíte jej pomocí karma runneru.
+
+ul
+  li.task V jedné konzoli nechejte běžet #[strong npm start] - webserver s cvičeními
+  li.task V druhé spusťte příkaz:
+
+snippet.
+  npm run tests-01-promise
+
+p.
+  Testy reagují na změny a spouští se automaticky, můžete se tedy věnovat kódu a podívat se na stav testů vždy když je třeba.
+
+h4 1.1 - Vraťte promise
+
+p.
+  Tento úkol budete zpracovávat v souboru #[em timeout-promise.js]
+
+ul
+  li Funkce reprezentující promise je již připravená, můžete si všimnout i exekutoru.
+  li Funkce ale zatím nic nevrací.
+  li.task Vraťte tedy novou Promise
+
+hint Promise vytvoříte pomocí #[strong new Promise(executor)]
+
+solution
+  :highlight-js
+    const timeoutPromiseFactory = (delay, conditionFunction) => {
+      const executor = (resolve, reject) => {};
+
+      return new Promise(executor);
+    };
+
+tests(todo="1.1")
+
+h4 1.2 - Vyhodnocení promise
+ul
+  li První co by promise měla dělat, přejít do stavu resolved a vrátit hodnotu.
+  li Parametry #[strong resolve] a #[strong reject] jsou funkcemi.
+  li.task Zavolejte tedy funkci #[strong conditionFunction()] a předejte výsledek funkci #[strong resolve()]
+
+solution
+  :highlight-js
+    const executor = (resolve, reject) => {
+      resolve(conditionFunction());
+    };
+
+tests(todo="1.2")
+
+h4 1.3 - Zamítnutí promise
+ul
+  li Nyní už se promise vyhodnotí jako resolved s vrácenou hodnotou.
+  li My bychom ale chtěli umět reagovat i na chybu, například pokud funkce vrátí neplatnou hodnotu.
+  li.task Proveďte tedy #[strong resolve] jen pokud je vrácená hodnota převoditelná na #[strong true], v opačném případě volejte s vrácenou hodnotou #[strong reject]
+
+solution
+  :highlight-js
+    const value = conditionFunction();
+    if (value) {
+      resolve(value);
+    } else {
+      reject(value);
+    }
+
+tests(todo="1.3")
+
+h4 1.4 - Odložené volání
+ul
+  li Promise nevrací hodnotu ihned, jedná se o asynchronní volání
+  li Nejjednodušší variantou může být odložené volání funkce
+  li.task Obalte tedy předchozí vyhodnocení promise, odloženým voláním o délce #[strong delay] předané do funkce
+
+hint Pro odložené volání použijte funkci #[strong setTimeout(volanaFunkce, delay);]
+
+solution
+  :highlight-js
+    setTimeout(() => {
+      const value = conditionFunction();
+      if (value) {
+        resolve(value);
+      } else {
+      reject(value);
+      }
+    }, delay);
+
+tests-results

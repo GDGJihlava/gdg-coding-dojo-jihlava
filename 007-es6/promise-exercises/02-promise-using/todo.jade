@@ -1,0 +1,90 @@
+h3 1 - Nejlepších 10 filmů
+
+a(href="https://developer.mozilla.org/cs/docs/Web/JavaScript/Reference/Global_Objects/Promise")
+  h4 Promise dokumentace
+
+p.
+  V této části jsme pro Vás připravili malou aplikaci, která z REST API načítá seznam deseti nejlepších filmů.
+ul
+  li Pokud se na ni podíváte (Otevřete cvičení), uvidíte tři tlačítka, které zobrazí určitou množinu z načtených dat.
+  li Ze serveru se ale pokaždé načtou data znovu. Vyzkoušíte si tedy jednoduchou formu cachování pomocí promise.
+  li Pro tuto část nejsou připraveny testy, zkoušet ji tedy budete rovnou v prohlížeči.
+
+h4 1.1 - Cachování výsledků
+
+ul
+  li.task Podívejte se do #[em movies.js], uvidíte zde #[strong MovieService], která má metodu #[strong getBestMovies(count)].
+
+ul
+  li Ta získává data z metody #[strong getMovies] která nám poslouží jako prostředník, kde můžeme požadavek cachovat.
+  li Data se v ní načítají funkcí #[strong fetchMovies()], která vrací promise.
+
+ul
+  li.task Zavolejte tedy na vrácené promise metodu #[strong .then] a uložte získaná data do atributu movies.
+
+hint Nezapomeňte vrátit z funkce hodnotu abyste neporušili řetězec promise. Také musíte zachovat #[strong this]. Použijte arrow function, nebo #[strong bind].
+
+solution
+  :highlight-js
+    getMovies() {
+      return fetchMovies().then(movies => this.movies = movies);
+    };
+
+h4 1.2 - Vrácení hodnoty
+
+ul
+  li Nyní je potřeba ještě nacachovanou hodnotu vracet místo volání funkce #[strong fetchMovies()].
+  li Volající metoda očekává promise
+  li.task Zařiďte, aby se vrátila taky promise.
+
+hint Z obyčejné proměnné můžete udělat promise pomocí #[strong Promise.resolve(hodnota)]
+
+solution
+  :highlight-js
+    if(this.movies) {
+      return Promise.resolve(this.movies);
+    }
+
+h4 1.3 - Cachování probíhající promise
+ul
+  li Nyní už se požadavek po dokončení cachuje. Ale pokud odešlete požadavky rychle za sebou, začnou se vykonávat.
+  li To není žádoucí, také promise je možné cachovat.
+
+ul.task
+  li Přiřaďte tedy výsledek volání #[strong fetchMovies] do atributu #[strong moviesPromise] a ten poté vracejte.
+  li Funkci #[strong fetchMovies] volejte jen pokud je #[strong moviesPromise] prázdný.
+
+solution
+  :highlight-js
+    getMovies() {
+      if (this.movies) {
+        return Promise.resolve(this.movies);
+      }
+      if (!this.moviesPromise) {
+        this.moviesPromise = fetchMovies().then(movies => this.movies = movies);
+      }
+
+      return this.moviesPromise;
+    };
+
+h4 1.4 - Promise ve stavu resolved
+ul
+  li Nyní máme vlastně dvě úrovně cachování, promise, a výsledek.
+  li V tomto případě ale můžeme vystačit jen s cachováním promise
+  li Pokud je promise ve stavu resolved, bude jeho metoda #[strong .then] navždy vracet získaný výsledek.
+  li Odstraňte tedy cachování movies a také zápis do atributu movies.
+
+solution
+  :highlight-js
+    getMovies() {
+      if(!this.moviesPromise) {
+        this.moviesPromise = fetchMovies();
+      }
+
+      return this.moviesPromise;
+    };
+
+h4 1.5 - Ověření na UI
+ul
+  li Nyní můžete ověřit v UI, že se i po úpravách požadavek posílá jen jednou.
+

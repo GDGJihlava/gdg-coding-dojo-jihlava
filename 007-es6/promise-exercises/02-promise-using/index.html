@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="cz">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Async-promise | Javascript - Angular.cz</title>
+  <script src="/bower_components/es6-promise-polyfill/promise.js"></script>
+  <script src="/bower_components/fetch/fetch.js"></script>
+  <link href="/favicon.ico?v=js-exercise" type="image/x-icon",rel="icon">
+  <link href="/css/styles-async.css" rel="stylesheet"/>
+
+  <script src="/node_modules/vt100tocss/vt100tocss.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/scripts/es6_error.js"></script>
+  <script src="/scripts/socketio-livereload.js"></script>
+
+  <script src="movies-transpiled.js"></script>
+</head>
+
+<h1>07-async-promise - TODO 2</h1>
+
+<div class="alert alert-warning">Tady zpracovávejte druhou část, první se zpracovává proti karma testům</div>
+
+<button type="button" onclick="loadMovies(3)">Načíst 3</button>
+<button type="button" onclick="loadMovies(5)">Načíst 5</button>
+<button type="button" onclick="loadMovies(10)">Načíst 10</button>
+
+<div id="movies-container"></div>
+
+<script type="text/javascript">
+  var MovieService = movies.default;
+  var movieService = new MovieService();
+
+  function loadMovies(count) {
+    movieService.getBestMovies(count)
+        .then(function (movies) {
+          displayMovies(movies);
+        });
+  }
+
+  var displayMovies = function (movies) {
+
+    var html = '<div class="column"><div class="well">';
+    html += "<h3> Top " + movies.length + "</h3>";
+
+    for (var i = 0; i < movies.length; i++) {
+      var movie = movies[i];
+      var movieString = movie.rank + "." + movie.name + " (" + movie.year + ") - " + movie.rating + "%";
+
+      html += "<p>" + movieString + "</p>";
+    }
+
+    html += "</div></div>";
+
+    var element = document.querySelector("#movies-container");
+    element.innerHTML = html + element.innerHTML;
+  }
+
+</script>
+</body>
+
+</html>

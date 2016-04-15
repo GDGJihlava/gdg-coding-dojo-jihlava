@@ -1,0 +1,11 @@
+/nbproject/
+/node_modules/
+/bower_components/
+/tmp/
+**/*iml
+**/.idea
+**/npm-debug.log
+test-results
+**/*-transpiled.js
+!**/complete/*-transpiled.js
+/index.html

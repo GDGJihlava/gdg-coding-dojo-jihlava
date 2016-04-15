@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="cz">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Async-promise | Javascript - Angular.cz</title>
+  <script src="/bower_components/es6-promise-polyfill/promise.js"></script>
+  <script src="/bower_components/fetch/fetch.js"></script>
+  <link href="/favicon.ico?v=js-exercise" type="image/x-icon",rel="icon">
+  <link href="/css/styles-async.css" rel="stylesheet"/>
+
+  <script src="/node_modules/vt100tocss/vt100tocss.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/scripts/es6_error.js"></script>
+  <script src="/scripts/socketio-livereload.js"></script>
+
+  <script src="timeout-promise-transpiled.js"></script>
+</head>
+
+<h1>01-promise</h1>
+
+<div class="alert alert-warning">Funkčnost timeoutPromiseFactory si můžete vyzkoušet také v gui</div>
+
+<button type="button" onclick="createPromise(1, 'success')">Vypiš výsledek za 1 vteřinu</button>
+<button type="button" onclick="createPromise(3, 'success')">Vypiš výsledek za 3 vteřiny</button>
+<button type="button" onclick="createPromise(3)">Vypiš chybu za 3 vteřin</button>
+
+<div id="promise-container"></div>
+
+<script type="text/javascript">
+  var elementNumber = 0;
+
+  function createPromise(time, value) {
+    createElement(elementNumber);
+
+    timeoutPromiseFactory(time * 1000, function() { return value})
+      .then(createMarkAsSuccess(elementNumber))
+      .catch(createMarkAsError(elementNumber));
+
+    elementNumber += 1;
+  }
+
+  var createElement = function (number) {
+
+    var id = id="promise-" + number;
+    var html = '<div id="' + id + '" class="column alert">';
+    html += "<h3> Promise " + number + "</h3>";
+    html += "</div></div>";
+
+    var element = document.querySelector("#promise-container");
+    element.innerHTML = html + element.innerHTML;
+  };
+
+  function createMarkAsSuccess(elementNumber) {
+    return function(value) {
+      console.log("success: promise-" + elementNumber);
+      var element = getElement(elementNumber);
+      element.classList.add("alert-success");
+      element.querySelector('h3').innerText += ' - ' + value;
+    }
+  }
+
+  function createMarkAsError(elementNumber) {
+    return function() {
+      console.log("error: promise-" + elementNumber);
+      getElement(elementNumber).classList.add("alert-danger");
+    }
+  }
+
+  function getElement(elementNumber) {
+    return document.querySelector("#promise-" + elementNumber);
+  }
+
+</script>
+</body>
+
+</html>
